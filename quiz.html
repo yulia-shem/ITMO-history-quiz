@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квиз: История Университета ИТМО</title>
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Подключение шрифта Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        itmoBlue: '#1946BA',
+                        itmoBlueDark: '#12338A',
+                        itmoPink: '#EC0B43',
+                        itmoPinkDark: '#C40837',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Плавные анимации появления элементов */
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-card {
+            animation: fadeSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        /* Стилизация фонового паттерна в стиле ИТМО */
+        .bg-itmo-pattern {
+            background-color: #f4f6fb;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(25, 70, 186, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 11, 67, 0.07) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-itmo-pattern min-h-screen text-slate-800 flex flex-col justify-between antialiased selection:bg-itmoBlue selection:text-white">
+
+    <!-- Верхняя навигационная панель -->
+    <header class="w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-itmoBlue to-itmoPink flex items-center justify-center text-white font-extrabold text-sm tracking-tighter shadow-sm">
+                    ITMO
+                </div>
+                <div>
+                    <span class="font-bold text-slate-900 tracking-tight text-base sm:text-lg block leading-none">Университет ИТМО</span>
+                    <span class="text-xs text-slate-500 font-medium">Исторический квиз</span>
+                </div>
+            </div>
+
+                    <!-- Счетчик баллов в шапке -->
+            <div id="header-score-badge" class="hidden items-center gap-2 bg-slate-100 px-3.5 py-1.5 rounded-full border border-slate-200">
+                <span class="w-2 h-2 rounded-full bg-itmoPink animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-semibold text-slate-700">Счёт: <span id="header-score" class="text-itmoBlue font-bold">0</span> / 5</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контейнер -->
+    <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10">
+        <div class="w-full max-w-3xl">
+
+            <!-- ЭКРАН 1: СТАРТОВЫЙ ЭКРАН -->
+            <section id="start-screen" class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden animate-card">
+                <div class="bg-gradient-to-r from-itmoBlue via-[#244ec2] to-itmoPink p-6 sm:p-10 text-white relative overflow-hidden">
+                    <!-- Декоративные круги -->
+                    <div class="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+                    <div class="absolute right-20 -bottom-16 w-40 h-40 rounded-full bg-itmoPink/30 blur-xl pointer-events-none"></div>
+
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-semibold uppercase tracking-wider mb-4">
+                        <span>Интерактивная викторина</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-3">
+                        История Университета ИТМО: ученые и открытия
+                    </h1>
+                    <p class="text-blue-100 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Проверьте свои знания о выдающихся ученых ЛИТМО, исторических корпусах и участии университета в космических программах.
+                    </p>
+                </div>
+
+                <div class="p-6 sm:p-10">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <div class="text-itmoBlue font-extrabold text-xl mb-1">5 вопросов</div>
+                            <div class="text-xs text-slate-500 font-medium">Два тематических блока по истории вуза</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <div class="text-itmoPink font-extrabold text-xl mb-1">Архивные фото</div>
+                            <div class="text-xs text-slate-500 font-medium">Вопросы с редкими иллюстрациями</div>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                            <div class="text-slate-800 font-extrabold text-xl mb-1">Разбор фактов</div>
+                            <div class="text-xs text-slate-500 font-medium">Историческая справка после каждого ответа</div>
+                        </div>
+                    </div>
+
+                    <button id="start-btn" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-itmoBlue hover:bg-itmoBlueDark active:scale-[0.99] text-white font-bold text-base shadow-lg shadow-itmoBlue/25 transition-all flex items-center justify-center gap-3 cursor-pointer">
+                        <span>Начать квиз</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ЭКРАН 2: КАРТОЧКА ВОПРОСА -->
+            <section id="quiz-screen" class="hidden">
+                <!-- Прогресс-бар и мета-информация -->
+                <div class="mb-5">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                        <span id="category-badge" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-itmoBlue/10 text-itmoBlue">
+                            Ученые Университета ИТМО
+                        </span>
+                        <span class="text-sm font-bold text-slate-600">
+                            Вопрос <span id="current-q-num" class="text-slate-900">1</span> из <span id="total-q-num">5</span>
+                        </span>
+                    </div>
+                    <!-- Полоса прогресса -->
+                    <div class="w-full h-2.5 bg-slate-200/80 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-itmoBlue to-itmoPink rounded-full transition-all duration-500 ease-out" style="width: 20%;"></div>
+                    </div>
+                </div>
+
+                <!-- Основная карточка -->
+                <div id="question-card" class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-6 sm:p-8 animate-card">
+                    <!-- Текст вопроса -->
+                    <h2 id="question-text" class="text-lg sm:text-2xl font-bold text-slate-900 leading-snug mb-6">
+                        Текст вопроса
+                    </h2>
+
+                    <!-- Контейнер для изображений ДО ответа (например, для вопроса про станцию «Вега») -->
+                    <div id="pre-images-container" class="hidden mb-6">
+                        <!-- Сюда динамически рендерятся карточки с фото до ответа -->
+                    </div>
+
+                    <!-- Варианты ответа -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Варианты генерируются через JS -->
+                    </div>
+
+                    <!-- Контейнер для изображений ПОСЛЕ ответа (например, для вопроса про здание на Гривцова) -->
+                    <div id="post-images-container" class="hidden mt-6">
+                        <!-- Сюда динамически рендерятся карточки с фото после ответа -->
+                    </div>
+
+                    <!-- Блок пояснения (появляется после ответа) -->
+                    <div id="explanation-box" class="hidden mt-6 p-5 rounded-2xl border transition-all">
+                        <div class="flex items-start gap-3">
+                            <div id="explanation-icon" class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm text-white"></div>
+                            <div>
+                                <h4 id="explanation-title" class="font-bold mb-1"></h4>
+                                <p id="explanation-text" class="text-slate-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка перехода к следующему вопросу -->
+                    <div id="next-btn-wrapper" class="hidden mt-6 pt-5 border-t border-slate-100 flex justify-end">
+                        <button id="next-btn" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-itmoBlue hover:bg-itmoBlueDark active:scale-[0.99] text-white font-bold text-sm sm:text-base shadow-md shadow-itmoBlue/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            <span id="next-btn-label">Следующий вопрос</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ЭКРАН 3: ИТОГОВЫЕ РЕЗУЛЬТАТЫ -->
+            <section id="result-screen" class="hidden bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden animate-card">
+                <div class="bg-gradient-to-br from-itmoBlue to-itmoPink p-8 sm:p-10 text-center text-white relative">
+                    <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/15 backdrop-blur-md mb-4 shadow-inner">
+                        <span id="result-emoji" class="text-4xl">🎓</span>
+                    </div>
+                    <div class="text-xs font-bold uppercase tracking-widest text-blue-100 mb-1">Ваш результат</div>
+                    <div class="text-4xl sm:text-5xl font-extrabold mb-2">
+                        <span id="final-score">0</span> из 5
+                    </div>
+                    <h2 id="result-rank" class="text-xl sm:text-2xl font-bold text-white">
+                        Знаток истории ИТМО
+                    </h2>
+                </div>
+
+                <div class="p-6 sm:p-8">
+                    <p id="result-description" class="text-center text-slate-600 text-sm sm:text-base max-w-lg mx-auto mb-6 leading-relaxed">
+                        Описание результата
+                    </p>
+
+                    <!-- Разбор ответов по вопросам -->
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Обзор ответов</h3>
+                        <div id="summary-list" class="space-y-2.5">
+                            <!-- Список результатов по каждому вопросу -->
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <button id="restart-btn" class="px-8 py-4 rounded-2xl bg-itmoPink hover:bg-itmoPinkDark active:scale-[0.99] text-white font-bold text-base shadow-lg shadow-itmoPink/25 transition-all flex items-center justify-center gap-2.5 cursor-pointer">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                            <span>Пройти заново</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="w-full py-5 text-center text-xs text-slate-400 px-4">
+        Историческая викторина Университета ИТМО • Подготовлено на основе архивных материалов ЛИТМО
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО (LIGHTBOX) ДЛЯ УВЕЛИЧЕНИЯ ИЛЛЮСТРАЦИЙ -->
+    <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true">
+        <button id="lightbox-close" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors cursor-pointer" aria-label="Закрыть изображение">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="max-w-4xl w-full flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="" class="max-h-[78vh] w-auto max-w-full rounded-2xl shadow-2xl border border-white/15 object-contain bg-slate-900">
+            <p id="lightbox-caption" class="mt-4 text-center text-white/90 text-sm sm:text-base font-medium max-w-2xl bg-white/10 px-4 py-2 rounded-xl"></p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Оригинальные иллюстрации пользователя без изменений, перерисовок и обрезки
+         */
+        const IMG_GRIVTSOVA_1920 = 'Гривцова_1920г.jpg';
+        const IMG_GRIVTSOVA_MODERN = 'Гривцова_4этажа.png';
+        const IMG_VEGA_STATION = 'Вега.png';
+
+        /**
+         * Массив вопросов квиза строго по тексту и структуре документа
+         */
+        const quizData = [
+            {
+                id: 1,
+                category: 'Ученые Университета ИТМО',
+                question: '1. Какое звание в области науки и техники получил Владимир Николаевич Чуриловский?',
+                options: [
+                    'Заслуженный деятель науки и техники РСФСР',
+                    'Лауреат Ленинской премии в области оптики',
+                    'Герой Социалистического Труда',
+                    'Академик Академии наук СССР'
+                ],
+                correctIndex: 0,
+                explanation: 'В.Н. Чуриловский — заслуженный деятель науки и техники РСФСР. Он является крупнейшим ученым в области теории оптических приборов. Кроме того, Чуриловский стоял в начале пути развития советской оптической промышленности.',
+                images: []
+            },
+            {
+                id: 2,
+                category: 'Ученые Университета ИТМО',
+                question: '2. В каком году Юрию Николаевичу Денисюку была присуждена Ленинская премия?',
+                options: [
+                    'В 1962 году',
+                    'В 1970 году',
+                    'В 1978 году',
+                    'В 1986 году'
+                ],
+                correctIndex: 1,
+                explanation: 'В 1970 году Ленинская премия была присуждена Ю.Н. Денисюку за цикл работ о голографии в трехмерной среде. Голографический метод Денисюка нашел международное признание, ученый открыл новые возможности для создания объемного кино и телевидения, конструирования различных приборов, для радио и гидролокации.',
+                images: []
+            },
+            {
+                id: 3,
+                category: 'Ученые Университета ИТМО',
+                question: '3. Правда ли, что инженерно-физический факультет ЛИТМО был создан по инициативе выдающегося оптика Сергея Ивановича Вавилова?',
+                options: [
+                    'Да, факультет был основан в начале 1946 года при его участии',
+                    'Нет, факультет был создан только в 1960-х годах без его участия'
+                ],
+                correctIndex: 0,
+                explanation: 'Да. В начале 1946 г. С.И. Вавилов стал одним из основателей факультета для подготовки кадров по специальностям: электроника, рентгенография, физическая оптика. Новый факультет получил название «Инженерно-физический факультет».',
+                images: []
+            },
+            {
+                id: 4,
+                category: 'Вопросы по иллюстрациям',
+                question: 'Почему студенты ЛИТМО 1920-х годов удивились бы фразе: «Я сегодня опоздал на математику на Гривцова, долго поднимался на 4 этаж»?',
+                options: [
+                    'В 1920-х годах в здании было всего 3 этажа (4-й надстроили позже), а сам переулок назывался Демидовым',
+                    'В 1920-х годах в этом здании располагалось общежитие, а лекции по математике не проводились',
+                    'Здание на переулке Гривцова было построено только после Великой Отечественной войны',
+                    'В 1920-х годах в здании уже работал первый в Ленинграде пассажирский лифт'
+                ],
+                correctIndex: 0,
+                showImagesBeforeAnswer: false,
+                explanation: 'Студенты удивились бы этой фразе, вероятно, потому что в здании на пер. Гривцова в 1920 году было 3 этажа. 4 этаж был надстроен позже. А также переулок Гривцова в то время назывался Демидов переулок.',
+                images: [
+                    {
+                        src: 'Гривцова_1920г.jpg',
+                        fallback: IMG_GRIVTSOVA_1920,
+                        caption: 'Главное здание ЛИТМО на Демидовом переулке, 10 (сейчас — переулок Гривцова, 14-16) — 1920 год'
+                    },
+                    {
+                        src: 'Гривцова_4этажа.jpg',
+                        fallback: IMG_GRIVTSOVA_MODERN,
+                        caption: 'Современный вид корпуса Университета ИТМО на переулке Гривцова, 14-16 (с надстроенным 4-м этажом)'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                category: 'Вопросы по иллюстрациям',
+                question: 'Эта межпланетная станция была построена при участии ЛИТМО для исследования в том числе кометы. Какое название носит эта комета?',
+                options: [
+                    'Комета Галлея',
+                    'Комета Хейла — Боппа',
+                    'Комета Чурюмова — Герасименко',
+                    'Комета Энке'
+                ],
+                correctIndex: 0,
+                showImagesBeforeAnswer: true,
+                explanation: 'На фотографии изображена станция Вега. Она была создана для изучения кометы Галлея и Венеры.',
+                explanationHtml: `
+                    На фотографии изображена станция <strong>«Вега»</strong>. Она была создана для изучения <strong>кометы Галлея</strong> и Венеры.<br>
+                    <a href="https://vkvideo.ru/video-173643328_456239092?list=ln-ZSmsE6z0VYZZ9lBeEO&t=1h12m39s" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-2.5 px-3.5 py-1.5 rounded-xl bg-itmoBlue/10 hover:bg-itmoBlue/20 text-itmoBlue font-semibold text-xs sm:text-sm transition-colors">
+                        <span>Подробнее об участии ЛИТМО в научных проектах (видео)</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                    </a>
+                `,
+                images: [
+                    {
+                        src: 'Вега.jpg',
+                        fallback: IMG_VEGA_STATION,
+                        caption: 'Автоматическая межпланетная станция «Вега»'
+                    }
+                ]
+            }
+        ];
+
+        // Состояние игры
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let userHistory = [];
+
+        // Элементы DOM
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const headerScoreBadge = document.getElementById('header-score-badge');
+        const headerScoreEl = document.getElementById('header-score');
+
+        const categoryBadge = document.getElementById('category-badge');
+        const currentQNum = document.getElementById('current-q-num');
+        const totalQNum = document.getElementById('total-q-num');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const preImagesContainer = document.getElementById('pre-images-container');
+        const postImagesContainer = document.getElementById('post-images-container');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationIcon = document.getElementById('explanation-icon');
+        const explanationTitle = document.getElementById('explanation-title');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtnWrapper = document.getElementById('next-btn-wrapper');
+        const nextBtnLabel = document.getElementById('next-btn-label');
+
+        // Элементы модального окна просмотра изображений
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(src, caption) {
+            lightboxImg.src = src;
+            lightboxCaption.textContent = caption;
+            lightboxModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightboxModal.classList.add('hidden');
+            lightboxImg.src = '';
+            document.body.style.overflow = '';
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            userHistory = [];
+
+            headerScoreEl.textContent = '0';
+            headerScoreBadge.classList.remove('hidden');
+            headerScoreBadge.classList.add('flex');
+
+            startScreen.classList.add('hidden');
+            resultScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+
+            totalQNum.textContent = quizData.length;
+            renderQuestion();
+        }
+
+        /**
+         * Универсальный рендер галереи изображений в указанный контейнер
+         */
+        function renderImagesInto(container, images) {
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+            container.className = images.length > 1
+                ? 'grid grid-cols-1 sm:grid-cols-2 gap-4 animate-card ' + (container.id === 'post-images-container' ? 'mt-6' : 'mb-6')
+                : 'grid grid-cols-1 gap-4 animate-card ' + (container.id === 'post-images-container' ? 'mt-6' : 'mb-6');
+
+            images.forEach((imgObj) => {
+                const figure = document.createElement('figure');
+                figure.className = 'group relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm cursor-pointer transition-all hover:shadow-md hover:border-itmoBlue/40 flex flex-col justify-between';
+                figure.innerHTML = `
+                    <div class="relative overflow-hidden bg-white p-2 flex items-center justify-center">
+                        <img src="${imgObj.src}" alt="${imgObj.caption}" class="w-full h-auto max-h-72 object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]">
+                        <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-lg bg-slate-900/75 text-white text-[11px] font-medium backdrop-blur-sm flex items-center gap-1 opacity-90 group-hover:opacity-100">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+                            </svg>
+                            Увеличить
+                        </span>
+                    </div>
+                    <figcaption class="p-3 text-xs text-slate-600 font-medium leading-snug bg-slate-50 border-t border-slate-100">
+                        ${imgObj.caption}
+                    </figcaption>
+                `;
+                const imgEl = figure.querySelector('img');
+                imgEl.addEventListener('error', function handleImgError() {
+                    if (imgObj.fallback && this.src !== imgObj.fallback) {
+                        this.src = imgObj.fallback;
+                    }
+                }, { once: true });
+
+                figure.addEventListener('click', () => openLightbox(imgEl.currentSrc || imgEl.src, imgObj.caption));
+                container.appendChild(figure);
+            });
+        }
+
+        function renderQuestion() {
+            answered = false;
+            const q = quizData[currentQuestionIndex];
+
+            // Перезапуск анимации карточки
+            const card = document.getElementById('question-card');
+            card.classList.remove('animate-card');
+            void card.offsetWidth;
+            card.classList.add('animate-card');
+
+            // Обновление заголовка и прогресса
+            categoryBadge.textContent = q.category;
+            if (q.category === 'Вопросы по иллюстрациям') {
+                categoryBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-itmoPink/10 text-itmoPink';
+            } else {
+                categoryBadge.className = 'inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-itmoBlue/10 text-itmoBlue';
+            }
+
+            currentQNum.textContent = currentQuestionIndex + 1;
+            const progressPercent = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+
+            questionText.textContent = q.question;
+
+            // Очищаем оба контейнера иллюстраций
+            preImagesContainer.innerHTML = '';
+            preImagesContainer.classList.add('hidden');
+            postImagesContainer.innerHTML = '';
+            postImagesContainer.classList.add('hidden');
+
+            // Если вопрос требует показа иллюстрации ДО ответа (например, вопрос №5 про станцию «Вега»)
+            if (q.images && q.images.length > 0 && q.showImagesBeforeAnswer) {
+                renderImagesInto(preImagesContainer, q.images);
+            }
+
+            // Варианты ответа
+            optionsContainer.innerHTML = '';
+            const letters = ['А', 'Б', 'В', 'Г'];
+            q.options.forEach((optionText, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'option-btn w-full text-left p-4 rounded-2xl border-2 border-slate-200/90 bg-white hover:border-itmoBlue hover:bg-blue-50/40 transition-all flex items-center gap-3.5 group cursor-pointer';
+                btn.innerHTML = `
+                    <span class="option-letter w-8 h-8 rounded-xl bg-slate-100 group-hover:bg-itmoBlue group-hover:text-white text-slate-600 font-bold text-sm flex items-center justify-center shrink-0 transition-colors">
+                        ${letters[idx]}
+                    </span>
+                    <span class="text-sm sm:text-base font-medium text-slate-800 leading-snug flex-grow">${optionText}</span>
+                    <span class="option-status shrink-0"></span>
+                `;
+                btn.addEventListener('click', () => handleAnswer(idx));
+                optionsContainer.appendChild(btn);
+            });
+
+            // Скрытие пояснения и кнопки «Далее»
+            explanationBox.classList.add('hidden');
+            nextBtnWrapper.classList.add('hidden');
+            nextBtnLabel.textContent = currentQuestionIndex === quizData.length - 1
+                ? 'Показать результаты'
+                : 'Следующий вопрос';
+        }
+
+        function handleAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = quizData[currentQuestionIndex];
+            const isCorrect = selectedIndex === q.correctIndex;
+
+            if (isCorrect) {
+                score++;
+                headerScoreEl.textContent = score;
+            }
+
+            userHistory.push({
+                question: q.question,
+                isCorrect: isCorrect,
+                userAnswer: q.options[selectedIndex],
+                correctAnswer: q.options[q.correctIndex]
+            });
+
+            // Визуальная подсветка вариантов
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:border-itmoBlue', 'hover:bg-blue-50/40', 'cursor-pointer');
+                btn.classList.add('cursor-default');
+
+                const letterBadge = btn.querySelector('.option-letter');
+                const statusSlot = btn.querySelector('.option-status');
+
+                if (idx === q.correctIndex) {
+                    btn.classList.remove('border-slate-200/90', 'bg-white');
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50/80');
+                    letterBadge.classList.remove('bg-slate-100', 'text-slate-600', 'group-hover:bg-itmoBlue');
+                    letterBadge.classList.add('bg-emerald-500', 'text-white');
+                    statusSlot.innerHTML = `
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    `;
+                } else if (idx === selectedIndex && !isCorrect) {
+                    btn.classList.remove('border-slate-200/90', 'bg-white');
+                    btn.classList.add('border-rose-500', 'bg-rose-50/80');
+                    letterBadge.classList.remove('bg-slate-100', 'text-slate-600', 'group-hover:bg-itmoBlue');
+                    letterBadge.classList.add('bg-rose-500', 'text-white');
+                    statusSlot.innerHTML = `
+                        <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    `;
+                } else {
+                    btn.classList.add('opacity-55');
+                }
+            });
+
+            // Если иллюстрации должны появиться ПОСЛЕ ответа (вопрос №4 про здание на Гривцова)
+            if (q.images && q.images.length > 0 && !q.showImagesBeforeAnswer) {
+                renderImagesInto(postImagesContainer, q.images);
+            }
+
+            // Отображение исторического пояснения
+            explanationBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'bg-rose-50', 'border-rose-200');
+            if (isCorrect) {
+                explanationBox.classList.add('bg-emerald-50/90', 'border-emerald-200');
+                explanationIcon.className = 'w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm';
+                explanationIcon.textContent = '✓';
+                explanationTitle.className = 'font-bold text-emerald-900 mb-1';
+                explanationTitle.textContent = 'Верно!';
+            } else {
+                explanationBox.classList.add('bg-rose-50/90', 'border-rose-200');
+                explanationIcon.className = 'w-7 h-7 rounded-full bg-rose-500 text-white flex items-center justify-center shrink-0 mt-0.5 font-bold text-sm';
+                explanationIcon.textContent = '!';
+                explanationTitle.className = 'font-bold text-rose-900 mb-1';
+                explanationTitle.textContent = 'Не совсем так';
+            }
+
+            if (q.explanationHtml) {
+                explanationText.innerHTML = q.explanationHtml;
+            } else {
+                explanationText.textContent = q.explanation;
+            }
+
+            nextBtnWrapper.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            document.getElementById('final-score').textContent = score;
+            const rankEl = document.getElementById('result-rank');
+            const descEl = document.getElementById('result-description');
+            const emojiEl = document.getElementById('result-emoji');
+
+            if (score === 5) {
+                emojiEl.textContent = '🏆';
+                rankEl.textContent = 'Академик истории ИТМО';
+                descEl.textContent = 'Безупречный результат! Вы отлично знаете биографии выдающихся ученых ЛИТМО, архитектуру корпуса на переулке Гривцова и космические достижения университета.';
+            } else if (score >= 3) {
+                emojiEl.textContent = '🎓';
+                rankEl.textContent = 'Исследователь истории ИТМО';
+                descEl.textContent = 'Хороший результат! Вы уверенно ориентируетесь в ключевых событиях истории Университета ИТМО и его научных школах.';
+            } else {
+                emojiEl.textContent = '📚';
+                rankEl.textContent = 'Первокурсник-историк';
+                descEl.textContent = 'Отличный повод узнать больше о легендарном прошлом Университета ИТМО! Попробуйте пройти квиз ещё раз, чтобы закрепить факты.';
+            }
+
+            // Формирование списка обзора ответов
+            const summaryList = document.getElementById('summary-list');
+            summaryList.innerHTML = '';
+            userHistory.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = `p-3.5 rounded-2xl border ${item.isCorrect ? 'bg-emerald-50/50 border-emerald-200/80' : 'bg-rose-50/50 border-rose-200/80'} flex items-start gap-3`;
+                row.innerHTML = `
+                    <span class="w-6 h-6 rounded-full ${item.isCorrect ? 'bg-emerald-500' : 'bg-rose-500'} text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        ${index + 1}
+                    </span>
+                    <div class="text-xs sm:text-sm">
+                        <div class="font-semibold text-slate-800 mb-1">${item.question}</div>
+                        <div class="${item.isCorrect ? 'text-emerald-700' : 'text-rose-700'} font-medium">
+                            Ваш ответ: ${item.userAnswer}
+                        </div>
+                        ${!item.isCorrect ? `<div class="text-slate-600 mt-0.5">Правильный ответ: <span class="font-semibold text-emerald-700">${item.correctAnswer}</span></div>` : ''}
+                    </div>
+                `;
+                summaryList.appendChild(row);
+            });
+        }
+
+        // Привязка обработчиков событий ко всем кнопкам и модальному окну
+        document.getElementById('start-btn').addEventListener('click', startQuiz);
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', startQuiz);
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) {
+                closeLightbox();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightboxModal.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
