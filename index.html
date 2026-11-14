@@ -75,7 +75,7 @@
     </header>
 
     <!-- Основной контейнер -->
-    <main class="flex-grow flex items-center justify-center px-4 py-6 sm:py-10">
+    <main class="flex-grow flex items-center justify-center px-4 sm:px-6 py-6 sm:py-10">
         <div class="w-full max-w-3xl">
 
             <!-- ЭКРАН 1: СТАРТОВЫЙ ЭКРАН -->
@@ -89,10 +89,10 @@
                         <span>Интерактивная викторина</span>
                     </div>
                     <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-3">
-                        История Университета ИТМО: ученые и открытия
+                        История Университета ИТМО
                     </h1>
                     <p class="text-blue-100 text-sm sm:text-base max-w-xl leading-relaxed">
-                        Проверьте свои знания о выдающихся ученых ЛИТМО, исторических корпусах и участии университета в космических программах.
+                        Проверьте свои знания о выдающихся ученых ИТМО, корпусах университета и его участии в космических программах.
                     </p>
                 </div>
 
@@ -100,11 +100,11 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                             <div class="text-itmoBlue font-extrabold text-xl mb-1">5 вопросов</div>
-                            <div class="text-xs text-slate-500 font-medium">Два тематических блока по истории вуза</div>
+                            <div class="text-xs text-slate-500 font-medium">Два тематических блока по истории университета</div>
                         </div>
                         <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                            <div class="text-itmoPink font-extrabold text-xl mb-1">Архивные фото</div>
-                            <div class="text-xs text-slate-500 font-medium">Вопросы с редкими иллюстрациями</div>
+                            <div class="text-itmoPink font-extrabold text-xl mb-1">Исторические фото</div>
+                            <div class="text-xs text-slate-500 font-medium">Вопросы с иллюстрациями</div>
                         </div>
                         <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                             <div class="text-slate-800 font-extrabold text-xl mb-1">Разбор фактов</div>
@@ -182,11 +182,10 @@
                             </svg>
                         </button>
                     </div>
-                </div>
             </section>
 
             <!-- ЭКРАН 3: ИТОГОВЫЕ РЕЗУЛЬТАТЫ -->
-            <section id="result-screen" class="hidden bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden animate-card">
+            <section id="result-screen" class="hidden bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden animate-card max-w-xl w-full mx-auto">
                 <div class="bg-gradient-to-br from-itmoBlue to-itmoPink p-8 sm:p-10 text-center text-white relative">
                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/15 backdrop-blur-md mb-4 shadow-inner">
                         <span id="result-emoji" class="text-4xl">🎓</span>
@@ -229,7 +228,7 @@
 
     <!-- Подвал -->
     <footer class="w-full py-5 text-center text-xs text-slate-400 px-4">
-        Историческая викторина Университета ИТМО • Подготовлено на основе архивных материалов ЛИТМО
+        Историческая викторина Университета ИТМО
     </footer>
 
     <!-- МОДАЛЬНОЕ ОКНО (LIGHTBOX) ДЛЯ УВЕЛИЧЕНИЯ ИЛЛЮСТРАЦИЙ -->
@@ -317,7 +316,7 @@
                         caption: 'Главное здание ЛИТМО на Демидовом переулке, 10 (сейчас — переулок Гривцова, 14-16) — 1920 год'
                     },
                     {
-                        src: 'Гривцова_4этажа.jpg',
+                        src: 'Гривцова_4этажа.png',
                         fallback: IMG_GRIVTSOVA_MODERN,
                         caption: 'Современный вид корпуса Университета ИТМО на переулке Гривцова, 14-16 (с надстроенным 4-м этажом)'
                     }
@@ -347,7 +346,7 @@
                 `,
                 images: [
                     {
-                        src: 'Вега.jpg',
+                        src: 'Вега.png',
                         fallback: IMG_VEGA_STATION,
                         caption: 'Автоматическая межпланетная станция «Вега»'
                     }
